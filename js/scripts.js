@@ -17,5 +17,21 @@ function encryptSentence(sentence){
       newSentence += sentence[i];
     }
   }
-  return newSentence;
+  var dimension = Math.sqrt(newSentence.length);
+  var table = [];
+  var tableWidth = Math.round(dimension);
+  while(newSentence.length > 0){
+    var row = [];
+    for(var tableElement = 0; tableElement < tableWidth; tableElement++){
+      if(newSentence[tableElement]){
+        row.push(newSentence[tableElement]);
+      }else{
+        row.push("");
+      }
+    }
+    newSentence = newSentence.substring(tableWidth, newSentence.length);
+    table.push(row);
+  }
+  console.log(table);
+  return table;
 }
