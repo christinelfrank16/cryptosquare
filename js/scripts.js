@@ -32,6 +32,22 @@ function encryptSentence(sentence){
     newSentence = newSentence.substring(tableWidth, newSentence.length);
     table.push(row);
   }
+  var count = 0;
+  var output = "";
+  for (var column=0; column<tableWidth; column++){
+    for (var row =0; row<table.length; row++){
+      if (count === 5){
+        output+= " ";
+        count = 0;
+      }
+      if (table[row][column] !== ""){
+        output+= table[row][column];
+        count++;
+
+      }
+    }
+  }
   console.log(table);
-  return table;
+  console.log(sentence);
+  return output;
 }
