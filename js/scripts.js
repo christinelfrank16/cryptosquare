@@ -17,25 +17,31 @@ function uncryptMsg(encryptedMsg){
   var msgNoSpaces = encryptedMsg.replace(/[\s]/g,"");
   var table = createTable(msgNoSpaces, false);
   var transposedTable = transposeTable(table);
-  console.log(transposedTable);
+  return unscrambleMsg(transposedTable);
 }
 
 function unscrambleMsg(table){
   var message = "";
-  var tableWidth = table[0].length;
-  for (var column=0; column<tableWidth; column++){
     for (var row =0; row<table.length; row++){
-      if (count === 5){
-        message+= " ";
-        count = 0;
-      }
-      if (table[row][column] !== ""){
-        message+= table[row][column];
-        count++;
-      }
+      message += table[row].join("");
+    }
+    message = cleanUpMessage(message);
+  return message;
+}
+
+function cleanUpMessage(message){
+  var cleanMsg = "";
+  var regexChar = /[a-z]/;
+  var regexDigit = /[0-9]/;
+  for(var i=0; i < message.length; i++){
+    if(regexChar.test(message[i])){
+      cleanMsg += message[i];
+    }
+    else if(regexDigit.test(message[i]) && regexChar.test(message[i-1])){
+      cleanMsg += " ";
     }
   }
-  return message;
+  return cleanMsg;
 }
 
 function createTable(formattedSentence, roundDirectionUp){
@@ -112,7 +118,5 @@ function encryptSentence(sentence){
   var transposedTable = transposeTable(table);
   var output = createMsg(transposedTable);
 
-  console.log(transposedTable);
-  console.log(sentence);
   return output;
 }
